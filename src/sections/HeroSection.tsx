@@ -24,7 +24,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onContactClick }) => {
       </div>
 
       {/* Hero Portrait with Magnet effect */}
-      <div className="absolute left-1/2 -translate-x-1/2 z-10 top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0 pointer-events-auto">
+      <div className="absolute left-1/2 -translate-x-1/2 z-10 bottom-0 translate-y-[10%] sm:translate-y-[12%] md:translate-y-[15%] pointer-events-auto">
         <FadeIn delay={0.6} y={30}>
           <Magnet
             padding={150}
@@ -35,7 +35,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onContactClick }) => {
             <img
               src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
               alt="Jack 3D Portrait"
-              className="w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] h-auto object-contain drop-shadow-2xl select-none pointer-events-auto"
+              className="w-[230px] sm:w-[300px] md:w-[370px] lg:w-[430px] h-auto object-contain drop-shadow-2xl select-none pointer-events-auto"
               loading="eager"
             />
           </Magnet>
