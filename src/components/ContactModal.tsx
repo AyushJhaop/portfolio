@@ -10,15 +10,21 @@ interface ContactModalProps {
 export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const targetEmail = 'ayushop645@gmail.com';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
+
+    const subject = encodeURIComponent(`Portfolio Message from ${formData.name}`);
+    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`);
+    window.open(`mailto:${targetEmail}?subject=${subject}&body=${body}`, '_blank');
+
     setTimeout(() => {
       setSubmitted(false);
       setFormData({ name: '', email: '', message: '' });
       onClose();
-    }, 2500);
+    }, 3000);
   };
 
   return (
@@ -45,7 +51,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-6 right-6 p-2 rounded-full text-[#D7E2EA]/60 hover:text-[#D7E2EA] hover:bg-white/10 transition-colors"
+              className="absolute top-6 right-6 p-2 rounded-full text-[#D7E2EA]/60 hover:text-[#D7E2EA] hover:bg-white/10 transition-colors cursor-pointer"
             >
               <X className="w-6 h-6" />
             </button>
@@ -57,84 +63,78 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                   animate={{ scale: 1 }}
                   transition={{ type: 'spring', stiffness: 200, damping: 15 }}
                 >
-                  <CheckCircle2 className="w-16 h-16 text-[#B600A8] mb-4" />
+                  <CheckCircle2 className="w-16 h-16 text-emerald-400 mb-4" />
                 </motion.div>
-                <h3 className="text-2xl font-bold uppercase text-[#D7E2EA] mb-2">Message Sent!</h3>
-                <p className="text-[#D7E2EA]/70">Thanks for reaching out! Ayush will get back to you soon.</p>
+                <h3 className="text-2xl font-bold uppercase text-[#D7E2EA] mb-2">Message Sent to Gmail!</h3>
+                <p className="text-[#D7E2EA]/70 text-sm">Your message has been routed to <span className="font-mono text-emerald-400">{targetEmail}</span>.</p>
               </div>
             ) : (
               <div>
                 <h3 className="hero-heading text-3xl sm:text-4xl font-black uppercase mb-2">Let's Connect</h3>
                 <p className="text-[#D7E2EA]/70 text-sm sm:text-base mb-8">
-                  Have a 3D project or design vision in mind? Drop a message below!
+                  Have a full-stack project, AI automation, or web application in mind? Drop a message directly to Gmail below!
                 </p>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                   <div>
                     <label className="block text-xs uppercase tracking-wider text-[#D7E2EA]/60 mb-2 font-medium">
-                      Your Name
+                      Your Name *
                     </label>
                     <input
                       type="text"
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="John Doe"
-                      className="w-full bg-[#0C0C0C] border border-[#D7E2EA]/20 rounded-2xl px-4 py-3 text-[#D7E2EA] placeholder-[#D7E2EA]/30 focus:outline-none focus:border-[#B600A8] transition-colors"
+                      placeholder="Your Name"
+                      className="w-full bg-[#0C0C0C] border border-[#D7E2EA]/20 rounded-2xl px-4 py-3 text-[#D7E2EA] placeholder-[#D7E2EA]/30 focus:outline-none focus:border-[#D7E2EA] transition-colors"
                     />
                   </div>
 
                   <div>
                     <label className="block text-xs uppercase tracking-wider text-[#D7E2EA]/60 mb-2 font-medium">
-                      Your Email
+                      Your Email *
                     </label>
                     <input
                       type="email"
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="john@example.com"
-                      className="w-full bg-[#0C0C0C] border border-[#D7E2EA]/20 rounded-2xl px-4 py-3 text-[#D7E2EA] placeholder-[#D7E2EA]/30 focus:outline-none focus:border-[#B600A8] transition-colors"
+                      placeholder="yourname@example.com"
+                      className="w-full bg-[#0C0C0C] border border-[#D7E2EA]/20 rounded-2xl px-4 py-3 text-[#D7E2EA] placeholder-[#D7E2EA]/30 focus:outline-none focus:border-[#D7E2EA] transition-colors"
                     />
                   </div>
 
                   <div>
                     <label className="block text-xs uppercase tracking-wider text-[#D7E2EA]/60 mb-2 font-medium">
-                      Project Details
+                      Project Details *
                     </label>
                     <textarea
                       required
                       rows={4}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Tell me about your 3D modeling, branding, or rendering needs..."
-                      className="w-full bg-[#0C0C0C] border border-[#D7E2EA]/20 rounded-2xl px-4 py-3 text-[#D7E2EA] placeholder-[#D7E2EA]/30 focus:outline-none focus:border-[#B600A8] transition-colors resize-none"
+                      placeholder="Tell me about your web app, AI automation, or software needs..."
+                      className="w-full bg-[#0C0C0C] border border-[#D7E2EA]/20 rounded-2xl px-4 py-3 text-[#D7E2EA] placeholder-[#D7E2EA]/30 focus:outline-none focus:border-[#D7E2EA] transition-colors resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="mt-4 w-full py-4 rounded-full font-medium uppercase tracking-widest text-white flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer"
-                    style={{
-                      background: 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
-                      boxShadow: '0px 4px 4px rgba(181, 1, 167, 0.25), 4px 4px 12px #7721B1 inset',
-                      outline: '2px solid white',
-                      outlineOffset: '-3px',
-                    }}
+                    className="mt-4 w-full py-4 rounded-full font-bold uppercase tracking-widest text-[#0C0C0C] bg-[#D7E2EA] hover:bg-white flex items-center justify-center gap-2 transition-colors cursor-pointer"
                   >
-                    <span>Send Message</span>
+                    <span>Send Message to Gmail</span>
                     <Send className="w-4 h-4" />
                   </button>
                 </form>
 
                 <div className="mt-8 pt-6 border-t border-[#D7E2EA]/10 flex flex-wrap justify-between items-center text-xs text-[#D7E2EA]/50 gap-2">
                   <div className="flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-[#B600A8]" />
-                    <span>ayush@3dcreator.design</span>
+                    <Mail className="w-4 h-4 text-[#D7E2EA]" />
+                    <span className="font-mono text-xs">{targetEmail}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-[#B600A8]" />
-                    <span>Los Angeles / Remote</span>
+                    <MapPin className="w-4 h-4 text-[#D7E2EA]" />
+                    <span>India / Remote</span>
                   </div>
                 </div>
               </div>

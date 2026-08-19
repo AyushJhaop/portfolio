@@ -378,7 +378,7 @@ class Media {
       try {
         texture.image = img;
         this.program.uniforms.uImageSizes.value = [img.naturalWidth || 800, img.naturalHeight || 600];
-      } catch (err) {
+      } catch {
         setFallback();
       }
     };

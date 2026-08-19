@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FadeIn } from '../components/FadeIn';
 import { Mail, Send, MapPin, CheckCircle2, Copy, Check, ArrowUp } from 'lucide-react';
+import { GithubIcon, LinkedinIcon } from '../components/Icons';
 
 export const ContactSection: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -13,10 +14,12 @@ export const ContactSection: React.FC = () => {
     message: '',
   });
 
-  const email = 'ayushjha.dev@gmail.com';
+  const targetEmail = 'ayushop645@gmail.com';
+  const githubUrl = 'https://github.com/AyushJhaop';
+  const linkedinUrl = 'https://www.linkedin.com/in/ayush-jha-63b657319/';
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText(email);
+    navigator.clipboard.writeText(targetEmail);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -24,6 +27,14 @@ export const ContactSection: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
+
+    // Open mailto link so form message is sent directly to ayushop645@gmail.com
+    const subject = encodeURIComponent(`Portfolio Message: ${formData.service} from ${formData.name}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\nService: ${formData.service}\n\nMessage:\n${formData.message}`
+    );
+    window.open(`mailto:${targetEmail}?subject=${subject}&body=${body}`, '_blank');
+
     setTimeout(() => {
       setSubmitted(false);
       setFormData({
@@ -32,7 +43,7 @@ export const ContactSection: React.FC = () => {
         service: 'Custom SaaS Development',
         message: '',
       });
-    }, 4000);
+    }, 5000);
   };
 
   const scrollToTop = () => {
@@ -77,21 +88,21 @@ export const ContactSection: React.FC = () => {
                 Got a project or idea in mind?
               </h3>
               <p className="text-[#D7E2EA]/60 text-sm sm:text-base font-light leading-relaxed">
-                Whether you need a full-stack SaaS app, AI automation workflows, or a high-converting web design, I'm always open to discussing new opportunities.
+                Whether you need a full-stack web application, AI automation workflows, or a custom digital experience, I'm always open to discussing new opportunities.
               </p>
             </div>
 
             {/* Direct Email Card with Copy Button */}
             <div className="bg-[#141414] border border-[#D7E2EA]/15 rounded-[24px] sm:rounded-[32px] p-6 sm:p-8 flex flex-col gap-3 group hover:border-[#D7E2EA]/40 transition-colors">
               <span className="text-xs uppercase tracking-widest text-[#D7E2EA]/50 font-medium">
-                Direct Email
+                Direct Gmail Address
               </span>
               <div className="flex items-center justify-between gap-4 flex-wrap">
                 <a
-                  href={`mailto:${email}`}
+                  href={`mailto:${targetEmail}`}
                   className="text-base sm:text-lg md:text-xl font-mono font-semibold text-[#D7E2EA] hover:text-white transition-colors underline underline-offset-4 decoration-[#D7E2EA]/30 hover:decoration-[#D7E2EA]"
                 >
-                  {email}
+                  {targetEmail}
                 </a>
                 <button
                   onClick={handleCopyEmail}
@@ -129,37 +140,22 @@ export const ContactSection: React.FC = () => {
             {/* Social Links */}
             <div className="flex items-center gap-3 pt-2">
               <a
-                href="https://github.com"
+                href={githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 py-3 px-4 bg-[#141414] border border-[#D7E2EA]/15 rounded-2xl flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#D7E2EA] hover:border-[#D7E2EA] hover:bg-[#D7E2EA] hover:text-[#0C0C0C] transition-all"
               >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                </svg>
+                <GithubIcon className="w-4 h-4 fill-current" />
                 <span>GitHub</span>
               </a>
               <a
-                href="https://linkedin.com"
+                href={linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 py-3 px-4 bg-[#141414] border border-[#D7E2EA]/15 rounded-2xl flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#D7E2EA] hover:border-[#D7E2EA] hover:bg-[#D7E2EA] hover:text-[#0C0C0C] transition-all"
               >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
+                <LinkedinIcon className="w-4 h-4 fill-current" />
                 <span>LinkedIn</span>
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 py-3 px-4 bg-[#141414] border border-[#D7E2EA]/15 rounded-2xl flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#D7E2EA] hover:border-[#D7E2EA] hover:bg-[#D7E2EA] hover:text-[#0C0C0C] transition-all"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-                <span>X / Twitter</span>
               </a>
             </div>
           </FadeIn>
@@ -177,20 +173,20 @@ export const ContactSection: React.FC = () => {
                     <CheckCircle2 className="w-20 h-20 text-emerald-400 mb-6" />
                   </motion.div>
                   <h3 className="text-2xl sm:text-3xl font-black uppercase text-[#D7E2EA] mb-3">
-                    Message Sent Successfully!
+                    Message Sent to Gmail!
                   </h3>
                   <p className="text-[#D7E2EA]/70 text-sm sm:text-base max-w-md font-light">
-                    Thank you for reaching out! I've received your message and will get back to you shortly.
+                    Thank you! Your inquiry has been routed directly to <span className="font-mono text-emerald-400">{targetEmail}</span>. I'll get back to you shortly.
                   </p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                   <div className="flex flex-col gap-2">
                     <h3 className="text-xl sm:text-2xl font-bold uppercase text-[#D7E2EA]">
-                      Send a Message
+                      Send a Message to Gmail
                     </h3>
                     <p className="text-[#D7E2EA]/60 text-xs sm:text-sm font-light">
-                      Fill out the form below and I'll respond within 24 hours.
+                      Fill out the form below to send an email directly to ayushop645@gmail.com.
                     </p>
                   </div>
 
@@ -205,7 +201,7 @@ export const ContactSection: React.FC = () => {
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="Ayush Jha"
+                        placeholder="Your Name"
                         className="w-full bg-[#0C0C0C] border border-[#D7E2EA]/20 rounded-2xl px-4 py-3.5 text-sm text-[#D7E2EA] placeholder-[#D7E2EA]/30 focus:outline-none focus:border-[#D7E2EA] focus:ring-1 focus:ring-[#D7E2EA]/40 transition-colors"
                       />
                     </div>
@@ -220,7 +216,7 @@ export const ContactSection: React.FC = () => {
                         required
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        placeholder="ayush@example.com"
+                        placeholder="yourname@example.com"
                         className="w-full bg-[#0C0C0C] border border-[#D7E2EA]/20 rounded-2xl px-4 py-3.5 text-sm text-[#D7E2EA] placeholder-[#D7E2EA]/30 focus:outline-none focus:border-[#D7E2EA] focus:ring-1 focus:ring-[#D7E2EA]/40 transition-colors"
                       />
                     </div>
@@ -265,7 +261,7 @@ export const ContactSection: React.FC = () => {
                     type="submit"
                     className="w-full py-4 bg-[#D7E2EA] text-[#0C0C0C] rounded-full font-bold uppercase tracking-widest text-sm flex items-center justify-center gap-3 hover:bg-white transition-colors cursor-pointer shadow-lg"
                   >
-                    <span>Send Message</span>
+                    <span>Send Message to Gmail</span>
                     <Send className="w-4 h-4" />
                   </motion.button>
                 </form>
