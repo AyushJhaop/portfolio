@@ -23,7 +23,7 @@ export const CustomCursor: React.FC = () => {
     const handleMouseMove = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
-      if (!isVisible) setIsVisible(true);
+      setIsVisible((prev) => (prev ? prev : true));
     };
 
     const handleMouseLeave = () => {
@@ -56,7 +56,7 @@ export const CustomCursor: React.FC = () => {
       window.removeEventListener('mouseover', handleElementHover);
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [cursorX, cursorY, isVisible]);
+  }, [cursorX, cursorY]);
 
   if (isTouchDevice || !isVisible) return null;
 

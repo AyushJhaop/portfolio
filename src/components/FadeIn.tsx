@@ -12,6 +12,21 @@ interface FadeInProps {
   style?: React.CSSProperties;
 }
 
+const motionComponents: Record<string, React.ComponentType<any>> = {
+  div: motion.div,
+  section: motion.section,
+  article: motion.article,
+  span: motion.span,
+  h1: motion.h1,
+  h2: motion.h2,
+  h3: motion.h3,
+  p: motion.p,
+  li: motion.li,
+  ul: motion.ul,
+  header: motion.header,
+  footer: motion.footer,
+};
+
 export const FadeIn: React.FC<FadeInProps> = ({
   children,
   delay = 0,
@@ -22,10 +37,10 @@ export const FadeIn: React.FC<FadeInProps> = ({
   as = 'div',
   style,
 }) => {
-  const MotionTag = motion.create(as as any);
+  const Component = motionComponents[as] || motion.div;
 
   return (
-    <MotionTag
+    <Component
       initial={{ opacity: 0, x, y }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: '50px', amount: 0 }}
@@ -38,6 +53,6 @@ export const FadeIn: React.FC<FadeInProps> = ({
       style={style}
     >
       {children}
-    </MotionTag>
+    </Component>
   );
 };
