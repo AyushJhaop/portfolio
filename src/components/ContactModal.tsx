@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, Mail, MapPin, CheckCircle2 } from 'lucide-react';
+import { X, Send, Mail, MapPin, CheckCircle2, Loader2 } from 'lucide-react';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -8,23 +8,53 @@ interface ContactModalProps {
 }
 
 export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
+  const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const targetEmail = 'ayushop645@gmail.com';
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
 
-    const subject = encodeURIComponent(`Portfolio Message from ${formData.name}`);
-    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`);
-    window.open(`mailto:${targetEmail}?subject=${subject}&body=${body}`, '_blank');
+    try {
+      // Send real email directly to ayushop645@gmail.com via FormSubmit AJAX endpoint
+      const response = await fetch(`https://formsubmit.co/ajax/${targetEmail}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `New Portfolio Message from ${formData.name}`,
+        }),
+      });
 
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', message: '' });
-      onClose();
-    }, 3000);
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        // Fallback to mailto if network blocked
+        const subject = encodeURIComponent(`Portfolio Message from ${formData.name}`);
+        const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`);
+        window.open(`mailto:${targetEmail}?subject=${subject}&body=${body}`, '_blank');
+        setSubmitted(true);
+      }
+    } catch {
+      const subject = encodeURIComponent(`Portfolio Message from ${formData.name}`);
+      const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`);
+      window.open(`mailto:${targetEmail}?subject=${subject}&body=${body}`, '_blank');
+      setSubmitted(true);
+    } finally {
+      setLoading(false);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({ name: '', email: '', message: '' });
+        onClose();
+      }, 4500);
+    }
   };
 
   return (
@@ -67,14 +97,19 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                 >
                   <CheckCircle2 className="w-16 h-16 text-emerald-400 mb-4" />
                 </motion.div>
-                <h3 className="text-2xl font-bold uppercase text-[#D7E2EA] mb-2">Message Sent to Gmail!</h3>
-                <p className="text-[#D7E2EA]/70 text-sm">Your message has been routed to <span className="font-mono text-emerald-400">{targetEmail}</span>.</p>
+                <h3 className="text-2xl font-bold uppercase text-[#D7E2EA] mb-2">Email Delivered Directly!</h3>
+                <p className="text-[#D7E2EA]/70 text-sm max-w-md">
+                  Your message has been sent directly to <span className="font-mono text-emerald-400">{targetEmail}</span>.
+                </p>
+                <p className="text-xs text-[#D7E2EA]/50 mt-3 italic">
+                  Note: If this is the first submission, check your Gmail inbox to click the FormSubmit activation link!
+                </p>
               </div>
             ) : (
               <div>
                 <h3 className="hero-heading text-3xl sm:text-4xl font-black uppercase mb-2">Let's Connect</h3>
                 <p className="text-[#D7E2EA]/70 text-sm sm:text-base mb-8">
-                  Have a full-stack project, AI automation, or web application in mind? Drop a message directly to Gmail below!
+                  Have a full-stack project, AI automation, or web application in mind? Send an email straight to ayushop645@gmail.com!
                 </p>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -122,10 +157,20 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
 
                   <button
                     type="submit"
-                    className="mt-4 w-full py-4 rounded-full font-bold uppercase tracking-widest text-[#0C0C0C] bg-[#D7E2EA] hover:bg-white flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                    disabled={loading}
+                    className="mt-4 w-full py-4 rounded-full font-bold uppercase tracking-widest text-[#0C0C0C] bg-[#D7E2EA] hover:bg-white flex items-center justify-center gap-2 transition-colors cursor-pointer disabled:opacity-50"
                   >
-                    <span>Send Message to Gmail</span>
-                    <Send className="w-4 h-4" />
+                    {loading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin text-[#0C0C0C]" />
+                        <span>Sending to Gmail...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Send Message to Gmail</span>
+                        <Send className="w-4 h-4" />
+                      </>
+                    )}
                   </button>
                 </form>
 

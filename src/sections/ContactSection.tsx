@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FadeIn } from '../components/FadeIn';
-import { Mail, Send, MapPin, CheckCircle2, Copy, Check, ArrowUp } from 'lucide-react';
+import { Mail, Send, MapPin, CheckCircle2, Copy, Check, ArrowUp, Loader2 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '../components/Icons';
 
 export const ContactSection: React.FC = () => {
   const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -24,26 +25,55 @@ export const ContactSection: React.FC = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
 
-    // Open mailto link so form message is sent directly to ayushop645@gmail.com
-    const subject = encodeURIComponent(`Portfolio Message: ${formData.service} from ${formData.name}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\nService: ${formData.service}\n\nMessage:\n${formData.message}`
-    );
-    window.open(`mailto:${targetEmail}?subject=${subject}&body=${body}`, '_blank');
-
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        service: 'Custom SaaS Development',
-        message: '',
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${targetEmail}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          service: formData.service,
+          message: formData.message,
+          _subject: `Portfolio Message: ${formData.service} from ${formData.name}`,
+        }),
       });
-    }, 5000);
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        const subject = encodeURIComponent(`Portfolio Message: ${formData.service} from ${formData.name}`);
+        const body = encodeURIComponent(
+          `Name: ${formData.name}\nEmail: ${formData.email}\nService: ${formData.service}\n\nMessage:\n${formData.message}`
+        );
+        window.open(`mailto:${targetEmail}?subject=${subject}&body=${body}`, '_blank');
+        setSubmitted(true);
+      }
+    } catch {
+      const subject = encodeURIComponent(`Portfolio Message: ${formData.service} from ${formData.name}`);
+      const body = encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\nService: ${formData.service}\n\nMessage:\n${formData.message}`
+      );
+      window.open(`mailto:${targetEmail}?subject=${subject}&body=${body}`, '_blank');
+      setSubmitted(true);
+    } finally {
+      setLoading(false);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({
+          name: '',
+          email: '',
+          service: 'Custom SaaS Development',
+          message: '',
+        });
+      }, 5000);
+    }
   };
 
   const scrollToTop = () => {
@@ -256,13 +286,23 @@ export const ContactSection: React.FC = () => {
 
                   {/* Submit Button */}
                   <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    whileHover={{ scale: loading ? 1 : 1.02 }}
+                    whileTap={{ scale: loading ? 1 : 0.98 }}
                     type="submit"
-                    className="w-full py-4 bg-[#D7E2EA] text-[#0C0C0C] rounded-full font-bold uppercase tracking-widest text-sm flex items-center justify-center gap-3 hover:bg-white transition-colors cursor-pointer shadow-lg"
+                    disabled={loading}
+                    className="w-full py-4 bg-[#D7E2EA] text-[#0C0C0C] rounded-full font-bold uppercase tracking-widest text-sm flex items-center justify-center gap-3 hover:bg-white transition-colors cursor-pointer shadow-lg disabled:opacity-50"
                   >
-                    <span>Send Message to Gmail</span>
-                    <Send className="w-4 h-4" />
+                    {loading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin text-[#0C0C0C]" />
+                        <span>Sending to Gmail...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Send Message to Gmail</span>
+                        <Send className="w-4 h-4" />
+                      </>
+                    )}
                   </motion.button>
                 </form>
               )}
