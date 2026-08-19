@@ -582,23 +582,23 @@ export const MagicBento: React.FC<MagicBentoProps> = ({
                 <span className="w-2.5 h-2.5 rounded-full bg-purple-400/60 group-hover:bg-purple-400 transition-colors shadow-sm" />
               </div>
 
-              <div className="magic-bento-card__content my-auto py-2">
+              <div className="magic-bento-card__content my-auto py-1">
                 <h2 className="magic-bento-card__title">{card.title}</h2>
                 {card.description && (
-                  <p className="magic-bento-card__description mb-4">{card.description}</p>
+                  <p className="magic-bento-card__description mb-3">{card.description}</p>
                 )}
 
                 {/* Tech Stack Icons Grid */}
                 {card.techs && card.techs.length > 0 && (
-                  <div className="flex flex-wrap items-center gap-2 pt-2 mt-auto">
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1.5 mt-auto">
                     {card.techs.map((tech) => (
                       <div
                         key={tech}
-                        className="flex items-center gap-2 px-3 py-1.5 bg-[#1E1A29] hover:bg-[#2A243A] border border-[#362E48] hover:border-[#8400FF]/80 rounded-xl transition-all duration-200 group/pill cursor-default shadow-sm"
+                        className="flex items-center gap-1.5 px-2.5 py-1 bg-[#1E1A29] hover:bg-[#2A243A] border border-[#362E48] hover:border-[#8400FF]/80 rounded-lg transition-all duration-200 group/pill cursor-default shadow-sm"
                         title={tech}
                       >
-                        <TechIcon name={tech} size={20} />
-                        <span className="text-xs uppercase tracking-wider font-semibold text-[#D7E2EA]/90 group-hover/pill:text-white">
+                        <TechIcon name={tech} size={16} />
+                        <span className="text-[11px] uppercase tracking-wider font-semibold text-[#D7E2EA]/90 group-hover/pill:text-white">
                           {tech}
                         </span>
                       </div>
