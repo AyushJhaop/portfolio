@@ -1,20 +1,14 @@
 import React from 'react';
 import { FadeIn } from '../components/FadeIn';
 import { GithubIcon, LinkedinIcon } from '../components/Icons';
+import { Download, Eye } from 'lucide-react';
+import resumePdf from '../assets/Ayush_resume.pdf';
 
 interface ResumeSectionProps {
   onResumeClick?: () => void;
 }
 
 export const ResumeSection: React.FC<ResumeSectionProps> = ({ onResumeClick }) => {
-  const handleDirectDownload = () => {
-    if (onResumeClick) {
-      onResumeClick();
-    } else {
-      window.print();
-    }
-  };
-
   const githubUrl = 'https://github.com/AyushJhaop';
   const linkedinUrl = 'https://www.linkedin.com/in/ayush-jha-63b657319/';
 
@@ -47,8 +41,8 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({ onResumeClick }) =
                   <h3 className="text-2xl sm:text-3xl font-bold uppercase text-[#0C0C0C]">
                     Curriculum Vitae
                   </h3>
-                  <span className="text-xs uppercase tracking-widest text-[#0C0C0C]/50">
-                    Latest 2026
+                  <span className="text-xs uppercase tracking-widest px-3 py-1 bg-[#0C0C0C]/5 rounded-full text-[#0C0C0C]/70 font-mono">
+                    PDF • 94 KB
                   </span>
                 </div>
 
@@ -58,19 +52,22 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({ onResumeClick }) =
               </div>
 
               <div className="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-[#0C0C0C]/10">
-                <button
-                  onClick={handleDirectDownload}
-                  className="w-full sm:flex-1 py-4 bg-[#0C0C0C] text-white rounded-full font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-[#252528] transition-colors cursor-pointer"
+                <a
+                  href={resumePdf}
+                  download="Ayush_Jha_Resume.pdf"
+                  className="w-full sm:flex-1 py-4 bg-[#0C0C0C] text-white rounded-full font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-[#252528] transition-colors cursor-pointer flex items-center justify-center gap-2 text-center shadow-lg"
                 >
-                  Download Resume PDF
-                </button>
+                  <Download className="w-4 h-4" />
+                  <span>Download Resume PDF</span>
+                </a>
 
                 {onResumeClick && (
                   <button
                     onClick={onResumeClick}
-                    className="w-full sm:w-auto px-6 py-4 rounded-full border-2 border-[#0C0C0C] text-[#0C0C0C] hover:bg-[#0C0C0C] hover:text-white uppercase tracking-wider text-xs font-semibold transition-colors cursor-pointer"
+                    className="w-full sm:w-auto px-6 py-4 rounded-full border-2 border-[#0C0C0C] text-[#0C0C0C] hover:bg-[#0C0C0C] hover:text-white uppercase tracking-wider text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-2"
                   >
-                    Preview CV
+                    <Eye className="w-4 h-4" />
+                    <span>Preview CV</span>
                   </button>
                 )}
               </div>

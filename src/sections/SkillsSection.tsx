@@ -7,42 +7,42 @@ const SKILLS_CARDS: BentoCardData[] = [
   {
     color: '#120F17',
     title: 'Languages & Core',
-    description: 'Foundation programming languages',
+    description: 'Foundation programming languages, modern typed abstractions, and algorithmic problem-solving.',
     label: '01 / Foundation',
-    techs: ['TypeScript', 'JavaScript', 'Python', 'C++']
+    techs: ['TypeScript', 'JavaScript', 'Python', 'C++', 'SQL']
   },
   {
     color: '#120F17',
     title: 'Frontend & 3D Web',
-    description: 'Modern reactive & immersive user interfaces',
+    description: 'Modern reactive component architectures, interactive motion, responsive layouts, and 3D web graphics.',
     label: '02 / Interface',
     techs: ['React', 'Next.js', 'Tailwind', 'Three.js', 'Framer Motion', 'GSAP']
   },
   {
     color: '#120F17',
     title: 'AI & Automation',
-    description: 'Intelligent pipelines & autonomous workflows',
+    description: 'Intelligent workflow automation, multi-agent LLM systems, prompt engineering, and API pipelines.',
     label: '03 / Intelligence',
     techs: ['n8n', 'OpenAI', 'Claude', 'Python']
   },
   {
     color: '#120F17',
     title: 'Backend & APIs',
-    description: 'High-throughput microservices & endpoints',
+    description: 'High-throughput RESTful and GraphQL endpoints, event-driven microservices, and server architecture.',
     label: '04 / Architecture',
     techs: ['Node.js', 'Express.js', 'FastAPI', 'GraphQL']
   },
   {
     color: '#120F17',
     title: 'Databases & Storage',
-    description: '',
+    description: 'Relational & NoSQL database schemas, ORM data access layers, indexing, and high-performance caching.',
     label: '05 / Storage',
-    techs: ['MongoDB', 'PostgreSQL', 'SQL', 'Prisma', 'Firebase']
+    techs: ['PostgreSQL', 'MongoDB', 'SQL', 'Prisma', 'Firebase']
   },
   {
     color: '#120F17',
     title: 'Cloud & DevOps',
-    description: 'Cloud infrastructure, containers & CI/CD',
+    description: 'Cloud deployment, containerized environments, version control, and continuous integration pipelines.',
     label: '06 / Deployment',
     techs: ['Docker', 'AWS', 'GitHub', 'Vercel', 'Postman', 'Figma']
   }
@@ -54,7 +54,7 @@ export const SkillsSection: React.FC = () => {
       id="skills"
       className="relative w-full bg-[#0C0C0C] text-[#D7E2EA] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 z-10 px-4 sm:px-6 md:px-10 py-20 sm:py-24 md:py-32 shadow-2xl border-t border-[#D7E2EA]/15 overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         {/* Section Heading */}
         <FadeIn delay={0} y={40} className="w-full text-center mb-12 sm:mb-16 md:mb-20">
           <h2
@@ -72,6 +72,7 @@ export const SkillsSection: React.FC = () => {
         <FadeIn delay={0.15} y={30} className="w-full flex justify-center">
           <MagicBento
             cards={SKILLS_CARDS}
+            layoutMode="skills"
             textAutoHide={false}
             enableStars={true}
             enableSpotlight={true}
@@ -79,8 +80,8 @@ export const SkillsSection: React.FC = () => {
             enableTilt={false}
             enableMagnetism={false}
             clickEffect={true}
-            spotlightRadius={280}
-            particleCount={12}
+            spotlightRadius={320}
+            particleCount={14}
             glowColor="132, 0, 255"
           />
         </FadeIn>

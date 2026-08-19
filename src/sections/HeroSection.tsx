@@ -14,11 +14,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 }) => {
   return (
     <section className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden bg-[#0C0C0C]">
-      {/* Top Spacer for Floating Navbar */}
-      <div className="w-full pt-14 sm:pt-18 md:pt-20" />
+      {/* Top Spacer for Floating Navbar - Responsive spacing */}
+      <div className="w-full pt-16 sm:pt-28 md:pt-36" />
 
       {/* Hero Heading */}
-      <div className="w-full overflow-hidden flex justify-center items-center z-0 px-2 sm:px-4">
+      <div className="w-full overflow-hidden flex justify-center items-center z-0 px-2 sm:px-4 mt-1 sm:mt-4 md:mt-6">
         <FadeIn delay={0.15} y={40} className="w-full text-center">
           <h1 className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-[10vw] sm:text-[12vw] md:text-[13vw] lg:text-[14vw] select-none">
             Hi, i'm ayush
@@ -26,10 +26,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </FadeIn>
       </div>
 
-      {/* Hero Portrait with Magnet effect - Elevated & Contained */}
-      <div className="relative w-full flex items-center justify-center z-10 my-auto pointer-events-auto py-2">
+      {/* Hero Portrait with Magnet effect - Perfectly framed & 100% visible on mobile */}
+      <div className="relative w-full flex items-center justify-center z-10 my-auto pointer-events-auto py-1 sm:py-2 mt-2 sm:mt-6 md:mt-8 transform translate-y-0 sm:translate-y-4 md:translate-y-8">
         {/* Soft atmospheric backlight */}
-        <div className="absolute w-[280px] sm:w-[380px] md:w-[460px] h-[280px] sm:h-[380px] md:h-[460px] bg-radial from-white/[0.08] via-transparent to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+        <div className="absolute w-[240px] xs:w-[280px] sm:w-[380px] md:w-[460px] h-[240px] xs:h-[280px] sm:h-[380px] md:h-[460px] bg-radial from-white/[0.08] via-transparent to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
 
         <FadeIn delay={0.3} y={20}>
           <Magnet
@@ -41,7 +41,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <img
               src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
               alt="Ayush 3D Portrait"
-              className="w-[170px] xs:w-[210px] sm:w-[280px] md:w-[340px] lg:w-[390px] max-h-[42vh] xs:max-h-[46vh] sm:max-h-[50vh] md:max-h-[54vh] h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.95)] select-none pointer-events-auto"
+              className="w-[160px] xs:w-[200px] sm:w-[280px] md:w-[340px] lg:w-[390px] max-h-[36vh] xs:max-h-[40vh] sm:max-h-[48vh] md:max-h-[52vh] h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.95)] select-none pointer-events-auto"
               loading="eager"
             />
           </Magnet>

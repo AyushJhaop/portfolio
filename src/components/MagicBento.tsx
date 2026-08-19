@@ -493,10 +493,11 @@ const GlobalSpotlight: React.FC<GlobalSpotlightProps> = ({
 interface BentoCardGridProps {
   children: React.ReactNode;
   gridRef: React.RefObject<HTMLDivElement | null>;
+  layoutMode?: 'skills' | 'achievements' | 'auto';
 }
 
-const BentoCardGrid: React.FC<BentoCardGridProps> = ({ children, gridRef }) => (
-  <div className="card-grid bento-section" ref={gridRef}>
+const BentoCardGrid: React.FC<BentoCardGridProps> = ({ children, gridRef, layoutMode = 'auto' }) => (
+  <div className={`card-grid card-grid--${layoutMode} bento-section`} ref={gridRef}>
     {children}
   </div>
 );
@@ -529,6 +530,7 @@ export interface MagicBentoProps {
   clickEffect?: boolean;
   enableMagnetism?: boolean;
   cards?: BentoCardData[];
+  layoutMode?: 'skills' | 'achievements' | 'auto';
 }
 
 export const MagicBento: React.FC<MagicBentoProps> = ({
@@ -543,7 +545,8 @@ export const MagicBento: React.FC<MagicBentoProps> = ({
   glowColor = DEFAULT_GLOW_COLOR,
   clickEffect = true,
   enableMagnetism = true,
-  cards = defaultCardData
+  cards = defaultCardData,
+  layoutMode = 'auto'
 }) => {
   const gridRef = useRef<HTMLDivElement>(null);
   const isMobile = useMobileDetection();
@@ -561,7 +564,7 @@ export const MagicBento: React.FC<MagicBentoProps> = ({
         />
       )}
 
-      <BentoCardGrid gridRef={gridRef}>
+      <BentoCardGrid gridRef={gridRef} layoutMode={layoutMode}>
         {cards.map((card, index) => {
           const baseClassName = `magic-bento-card ${textAutoHide ? 'magic-bento-card--text-autohide' : ''} ${enableBorderGlow ? 'magic-bento-card--border-glow' : ''}`;
           const cardProps = {
@@ -576,26 +579,26 @@ export const MagicBento: React.FC<MagicBentoProps> = ({
             <>
               <div className="magic-bento-card__header">
                 <span className="magic-bento-card__label">{card.label}</span>
-                <span className="w-2 h-2 rounded-full bg-[#D7E2EA]/30 group-hover:bg-[#D7E2EA] transition-colors" />
+                <span className="w-2.5 h-2.5 rounded-full bg-purple-400/60 group-hover:bg-purple-400 transition-colors shadow-sm" />
               </div>
 
               <div className="magic-bento-card__content my-auto py-2">
                 <h2 className="magic-bento-card__title">{card.title}</h2>
                 {card.description && (
-                  <p className="magic-bento-card__description mb-3">{card.description}</p>
+                  <p className="magic-bento-card__description mb-4">{card.description}</p>
                 )}
 
                 {/* Tech Stack Icons Grid */}
                 {card.techs && card.techs.length > 0 && (
-                  <div className="flex flex-wrap items-center gap-2 pt-2">
+                  <div className="flex flex-wrap items-center gap-2 pt-2 mt-auto">
                     {card.techs.map((tech) => (
                       <div
                         key={tech}
-                        className="flex items-center gap-1.5 px-2.5 py-1.5 bg-[#1C1824] hover:bg-[#282236] border border-[#2F293A] hover:border-[#8400FF]/60 rounded-xl transition-all duration-200 group/pill cursor-default shadow-sm"
+                        className="flex items-center gap-2 px-3 py-1.5 bg-[#1E1A29] hover:bg-[#2A243A] border border-[#362E48] hover:border-[#8400FF]/80 rounded-xl transition-all duration-200 group/pill cursor-default shadow-sm"
                         title={tech}
                       >
-                        <TechIcon name={tech} size={18} />
-                        <span className="text-[11px] uppercase tracking-wider font-medium text-[#D7E2EA]/90 group-hover/pill:text-white">
+                        <TechIcon name={tech} size={20} />
+                        <span className="text-xs uppercase tracking-wider font-semibold text-[#D7E2EA]/90 group-hover/pill:text-white">
                           {tech}
                         </span>
                       </div>

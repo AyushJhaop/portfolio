@@ -52,7 +52,7 @@ export function App() {
         />
 
         {/* 1. Hero Section (Base Layer) */}
-        <div className="relative z-0">
+        <div id="hero" className="relative z-0">
           <HeroSection
             onContactClick={handleOpenContact}
             onResumeClick={handleOpenResume}

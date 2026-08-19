@@ -3,21 +3,20 @@
   --sat: 69%;
   --white: hsl(0, 0%, 100%);
   --purple-primary: rgba(132, 0, 255, 1);
-  --purple-glow: rgba(132, 0, 255, 0.2);
+  --purple-glow: rgba(132, 0, 255, 0.25);
   --purple-border: rgba(132, 0, 255, 0.8);
   --border-color: #2F293A;
-  --background-dark: #120F17;
+  --background-dark: #14111D;
   color-scheme: light dark;
 }
 
 .card-grid {
   display: grid;
-  gap: 0.9em;
-  padding: 0.75em;
-  max-width: 68em;
+  gap: 1.5rem;
+  padding: 0;
+  max-width: 100%;
   width: 100%;
   margin: 0 auto;
-  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
 }
 
 .magic-bento-card {
@@ -25,16 +24,16 @@
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  min-height: 200px;
+  min-height: 280px;
   width: 100%;
   max-width: 100%;
-  padding: 1.35em;
-  border-radius: 20px;
+  padding: 2rem;
+  border-radius: 32px;
   border: 1px solid var(--border-color);
-  background: var(--background-dark);
+  background: linear-gradient(145deg, #161220 0%, #100D18 100%);
   font-weight: 300;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
   transform-origin: center center;
   transition: transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1), border-color 0.3s ease, box-shadow 0.35s ease;
   will-change: transform;
@@ -42,14 +41,21 @@
   --glow-x: 50%;
   --glow-y: 50%;
   --glow-intensity: 0;
-  --glow-radius: 200px;
+  --glow-radius: 350px;
+}
+
+@media (min-width: 1024px) {
+  .magic-bento-card {
+    padding: 2.5rem;
+    min-height: 300px;
+  }
 }
 
 .magic-bento-card:hover {
-  transform: scale(1.028);
+  transform: translateY(-6px) scale(1.02);
   z-index: 10;
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(132, 0, 255, 0.25);
-  border-color: rgba(215, 226, 234, 0.4);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(132, 0, 255, 0.35);
+  border-color: rgba(215, 226, 234, 0.55);
 }
 
 .magic-bento-card__header,
@@ -60,79 +66,134 @@
 }
 
 .magic-bento-card__header {
-  gap: 0.75em;
+  gap: 0.75rem;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1.5rem;
 }
 
 .magic-bento-card__content {
   flex-direction: column;
   margin-top: auto;
-  padding-top: 0.5em;
+  padding-top: 0.5rem;
 }
 
 .magic-bento-card__label {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.05em;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(215, 226, 234, 0.6);
+  color: rgba(215, 226, 234, 0.65);
 }
 
 .magic-bento-card__title {
-  font-weight: 600;
-  font-size: 17px;
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 1.25;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  margin: 0 0 0.25em;
+  margin: 0 0 0.75rem;
   color: #FFFFFF;
 }
 
-.magic-bento-card__description {
-  font-size: 12px;
-  line-height: 1.3;
-  color: rgba(215, 226, 234, 0.75);
-}
-
-@media (max-width: 599px) {
-  .card-grid {
-    grid-template-columns: 1fr;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0.5em;
-  }
-
-  .magic-bento-card {
-    width: 100%;
-    min-height: 180px;
-  }
-}
-
-@media (min-width: 600px) and (max-width: 1023px) {
-  .card-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* React Bits Signature Asymmetric Bento Grid Spans */
 @media (min-width: 1024px) {
-  .card-grid {
+  .magic-bento-card__title {
+    font-size: 1.75rem;
+  }
+}
+
+.magic-bento-card__description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(215, 226, 234, 0.85);
+  font-weight: 300;
+}
+
+@media (min-width: 1024px) {
+  .magic-bento-card__description {
+    font-size: 1.1rem;
+  }
+}
+
+/* --- Signature Asymmetric Bento Spans for Skills (6 Cards) --- */
+@media (min-width: 1024px) {
+  .card-grid--skills {
     grid-template-columns: repeat(4, 1fr);
+    gap: 1.75rem;
   }
 
-  .magic-bento-card:nth-child(3) {
+  .card-grid--skills .magic-bento-card:nth-child(1) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .card-grid--skills .magic-bento-card:nth-child(2) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .card-grid--skills .magic-bento-card:nth-child(3) {
     grid-column: span 2;
     grid-row: span 2;
   }
 
-  .magic-bento-card:nth-child(4) {
+  .card-grid--skills .magic-bento-card:nth-child(4) {
     grid-column: 1 / span 2;
     grid-row: 2 / span 2;
   }
 
-  .magic-bento-card:nth-child(6) {
-    grid-column: 4;
-    grid-row: 3;
+  .card-grid--skills .magic-bento-card:nth-child(5) {
+    grid-column: 3 / span 1;
+    grid-row: 3 / span 1;
+  }
+
+  .card-grid--skills .magic-bento-card:nth-child(6) {
+    grid-column: 4 / span 1;
+    grid-row: 3 / span 1;
+  }
+}
+
+/* --- Signature Asymmetric Bento Spans for Achievements (4 Cards) --- */
+@media (min-width: 1024px) {
+  .card-grid--achievements {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.75rem;
+  }
+
+  .card-grid--achievements .magic-bento-card:nth-child(1) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .card-grid--achievements .magic-bento-card:nth-child(2) {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  .card-grid--achievements .magic-bento-card:nth-child(3) {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  .card-grid--achievements .magic-bento-card:nth-child(4) {
+    grid-column: span 4;
+    grid-row: span 1;
+  }
+}
+
+@media (max-width: 1023px) and (min-width: 640px) {
+  .card-grid--skills,
+  .card-grid--achievements {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .card-grid--skills,
+  .card-grid--achievements {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
 }
 
