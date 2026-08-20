@@ -9,7 +9,7 @@ const SKILLS_CARDS: BentoCardData[] = [
     title: 'Languages & Core',
     description: 'Foundation programming languages, modern typed abstractions, and algorithmic problem-solving.',
     label: '01 / Foundation',
-    techs: ['TypeScript', 'JavaScript', 'Python', 'C++', 'SQL']
+    techs: ['TypeScript', 'JavaScript', 'Python', 'C++',]
   },
   {
     color: '#120F17',
